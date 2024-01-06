@@ -37,6 +37,13 @@
         }
       }
     },
+    "serve-db": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose run --rm --service-ports db",
+        "cwd": "apps/server/app"
+      }
+    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]

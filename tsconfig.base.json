@@ -13,8 +13,21 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "strict": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@showtime/browser-feature": ["libs/browser/feature/src/index.ts"],
+      "@showtime/browser-feature-2/server": [
+        "libs/browser/feature-2/src/server.ts"
+      ],
+      "@showtime/server-adapter-database": [
+        "libs/server/adapter-database/src/index.ts"
+      ],
+      "@showtime/server-adapter-open-movie-database": [
+        "libs/server/adapter-open-movie-database/src/index.ts"
+      ],
+      "@showtime/server-feature": ["libs/server/feature/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
