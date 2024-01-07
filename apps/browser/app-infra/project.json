@@ -1,0 +1,75 @@
+{
+  "name": "browser-app-infra",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/browser/app-infra/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/browser/app-infra",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "apps/browser/app-infra/src/main.ts",
+        "tsConfig": "apps/browser/app-infra/tsconfig.app.json",
+        "assets": ["apps/browser/app-infra/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "browser-app-infra:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "browser-app-infra:build:development"
+        },
+        "production": {
+          "buildTarget": "browser-app-infra:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/browser/app-infra/jest.config.ts"
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cdktf deploy",
+        "cwd": "apps/browser/app-infra"
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["browser-app"]
+}

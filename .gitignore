@@ -42,3 +42,10 @@ Thumbs.db
 
 # Next.js
 .next
+
+# Terraform
+.gen
+.terraform
+*terraform.*.tfstate*
+cdktf.out
+cdktf.log
