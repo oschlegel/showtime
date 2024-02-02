@@ -65,8 +65,9 @@
     "deploy": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "cdktf deploy",
-        "cwd": "apps/browser/app-infra"
+        "command": "cdktf deploy --auto-approve",
+        "cwd": "apps/browser/app-infra",
+        "envFile": "apps/browser/app-infra/.env"
       }
     }
   },
