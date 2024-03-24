@@ -3,7 +3,7 @@ import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import postgres from 'postgres';
 
 async function migrateDatabase() {
-  const sql = postgres('postgres://postgres:postgres@0.0.0.0:5432/postgres', {
+  const sql = postgres('postgres://postgres:postgres@0.0.0.0:5433/postgres', {
     max: 1,
   });
   const db = drizzle(sql);

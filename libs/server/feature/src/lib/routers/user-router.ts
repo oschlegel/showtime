@@ -4,10 +4,10 @@ import { UserDtoZod } from '../dto/user-dto';
 import { UserSessionDtoZod } from '../dto/user-session-dto';
 import { isAuthenticated } from '../is-authenticated';
 import { userService } from '../services/user-service';
-import { publicProcedure, router } from '../trpc';
+import { t } from '../trpc';
 
-export const userRouter = router({
-  login: publicProcedure
+export const userRouter = t.router({
+  login: t.procedure
     .input(LoginUserDtoZod)
     .output(UserSessionDtoZod)
     .mutation(async (opts) => {
@@ -17,7 +17,7 @@ export const userRouter = router({
       return userService.login(input);
     }),
 
-  logout: publicProcedure.use(isAuthenticated).mutation(async (opts) => {
+  logout: t.procedure.use(isAuthenticated).mutation(async (opts) => {
     const {
       ctx: { userSession },
     } = opts;
@@ -26,7 +26,7 @@ export const userRouter = router({
     return userService.logout(userSession!);
   }),
 
-  register: publicProcedure
+  register: t.procedure
     .input(RegisterUserDtoZod)
     .output(UserDtoZod)
     .mutation(async (opts) => {

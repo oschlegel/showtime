@@ -1,8 +1,8 @@
 import { titleRouter } from './title-router';
-import { router } from '../trpc';
+import { t } from '../trpc';
 import { userRouter } from './user-router';
 
-export const appRouter = router({
+export const appRouter = t.router({
   title: titleRouter,
   user: userRouter,
 });

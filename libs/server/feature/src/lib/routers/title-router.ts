@@ -1,14 +1,14 @@
 import { z } from 'zod';
-import { titleService } from '../services/title-service';
-import { publicProcedure, router } from '../trpc';
-import { isAuthenticated } from '../is-authenticated';
-import { TitleSearchResultDtoZod } from '../dto/title-search-result-dto';
-import { TitleDtoZod } from '../dto/title-dto';
 import { GetSeasonsDtoZod } from '../dto/get-seasons-dto';
 import { SeasonDtoZod } from '../dto/season-dto';
+import { TitleDtoZod } from '../dto/title-dto';
+import { TitleSearchResultDtoZod } from '../dto/title-search-result-dto';
+import { isAuthenticated } from '../is-authenticated';
+import { titleService } from '../services/title-service';
+import { t } from '../trpc';
 
-export const titleRouter = router({
-  getFavourites: publicProcedure
+export const titleRouter = t.router({
+  getFavourites: t.procedure
     .use(isAuthenticated)
     .output(z.array(TitleDtoZod))
     .query(async (opts) => {
@@ -20,7 +20,7 @@ export const titleRouter = router({
       return titleService.getFavourites(user!.id);
     }),
 
-  getTitle: publicProcedure
+  getTitle: t.procedure
     .use(isAuthenticated)
     .input(z.string())
     .output(TitleDtoZod)
@@ -34,7 +34,7 @@ export const titleRouter = router({
       return titleService.getTitle(input, user!.id);
     }),
 
-  getSeasons: publicProcedure
+  getSeasons: t.procedure
     .use(isAuthenticated)
     .input(GetSeasonsDtoZod)
     .output(z.array(SeasonDtoZod))
@@ -48,7 +48,7 @@ export const titleRouter = router({
       return titleService.getSeasons(input.id, input.seasonIds, user!.id);
     }),
 
-  markAsFavourite: publicProcedure
+  markAsFavourite: t.procedure
     .use(isAuthenticated)
     .input(z.string())
     .mutation(async (opts) => {
@@ -61,7 +61,7 @@ export const titleRouter = router({
       return titleService.markAsFavourite(input, user!.id);
     }),
 
-  unmarkAsFavourite: publicProcedure
+  unmarkAsFavourite: t.procedure
     .use(isAuthenticated)
     .input(z.string())
     .mutation(async (opts) => {
@@ -74,7 +74,7 @@ export const titleRouter = router({
       return titleService.unmarkAsFavourite(input, user!.id);
     }),
 
-  markAsWatched: publicProcedure
+  markAsWatched: t.procedure
     .use(isAuthenticated)
     .input(z.string())
     .mutation(async (opts) => {
@@ -87,7 +87,7 @@ export const titleRouter = router({
       return titleService.markAsWatched(input, user!.id);
     }),
 
-  unmarkAsWatched: publicProcedure
+  unmarkAsWatched: t.procedure
     .use(isAuthenticated)
     .input(z.string())
     .mutation(async (opts) => {
@@ -100,7 +100,7 @@ export const titleRouter = router({
       return titleService.unmarkAsWatched(input, user!.id);
     }),
 
-  search: publicProcedure
+  search: t.procedure
     .use(isAuthenticated)
     .input(z.string())
     .output(TitleSearchResultDtoZod)

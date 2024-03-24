@@ -5,7 +5,7 @@ export default defineConfig({
   out: './src/database-migrations',
   driver: 'pg',
   dbCredentials: {
-    connectionString: 'postgres://postgres:postgres@0.0.0.0:5432/db',
+    connectionString: 'postgres://postgres:postgres@0.0.0.0:5433/db',
   },
   verbose: true,
   strict: true,
