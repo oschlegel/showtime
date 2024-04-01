@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { GetSeasonsDtoZod } from '../dto/get-seasons-dto';
+import { GetSeasonDtoZod } from '../dto/get-season-dto';
 import { SeasonDtoZod } from '../dto/season-dto';
 import { TitleDtoZod } from '../dto/title-dto';
 import { TitleSearchResultDtoZod } from '../dto/title-search-result-dto';
@@ -34,10 +34,10 @@ export const titleRouter = t.router({
       return titleService.getTitle(input, user!.id);
     }),
 
-  getSeasons: t.procedure
+  getSeason: t.procedure
     .use(isAuthenticated)
-    .input(GetSeasonsDtoZod)
-    .output(z.array(SeasonDtoZod))
+    .input(GetSeasonDtoZod)
+    .output(SeasonDtoZod)
     .query(async (opts) => {
       const {
         ctx: { user },
@@ -45,7 +45,7 @@ export const titleRouter = t.router({
       } = opts;
       console.log('titleRouter.getSeasons', JSON.stringify(input));
 
-      return titleService.getSeasons(input.id, input.seasonIds, user!.id);
+      return titleService.getSeason(input.id, input.seasonId, user!.id);
     }),
 
   markAsFavourite: t.procedure

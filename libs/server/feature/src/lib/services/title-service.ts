@@ -12,13 +12,13 @@ import {
   openMovieDatabaseService,
 } from '@showtime/server-adapter-open-movie-database';
 import { differenceInMilliseconds } from 'date-fns';
+import { EpisodeDto } from '../dto/episode-dto';
 import { MovieDto } from '../dto/movie-dto';
 import { SeasonDto } from '../dto/season-dto';
 import { SeriesDto } from '../dto/series-dto';
 import { TitleDto } from '../dto/title-dto';
 import { TitleSearchResultDto } from '../dto/title-search-result-dto';
 import { TitleSearchResultItemDto } from '../dto/title-search-result-item-dto';
-import { EpisodeDto } from '../dto/episode-dto';
 
 const titleChacheTTL = 24 * 60 * 60 * 1000;
 
@@ -93,27 +93,19 @@ const getTitleCached = async (
   return titleEntity.data as OmdbMovieDto | OmdbSeriesDto;
 };
 
-const getSeasons = async (
+const getSeason = async (
   id: string,
-  seasonIds: number[],
+  seasonId: number,
   userId: number
-): Promise<SeasonDto[]> => {
+): Promise<SeasonDto> => {
   const watches = await databaseService.getWatchesByUserId(userId);
-  const seasons = await Promise.all(
-    seasonIds.map((seasonId) =>
-      openMovieDatabaseService.getSeasonByImdbId(id, seasonId)
-    )
-  );
-  const episodeIds = seasons.flatMap((season) =>
-    season.Episodes.map((episode) => episode.imdbID)
-  );
+  const season = await openMovieDatabaseService.getSeasonByImdbId(id, seasonId);
+  const episodeIds = season.Episodes.map((episode) => episode.imdbID);
   const episodes = await Promise.all(
     episodeIds.map((episodeId) => getTitleCached(episodeId))
   );
 
-  return seasons.map((season) =>
-    toSeasonDto(season, episodes as OmdbEpisodeDto[], watches)
-  );
+  return toSeasonDto(season, episodes as OmdbEpisodeDto[], watches);
 };
 
 const markAsFavourite = async (
@@ -300,7 +292,7 @@ const toTitleSearchResultItemDto = (
 export const titleService = {
   getFavourites,
   getTitle,
-  getSeasons,
+  getSeason,
   markAsFavourite,
   unmarkAsFavourite,
   markAsWatched,
