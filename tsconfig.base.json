@@ -17,9 +17,8 @@
     "baseUrl": ".",
     "paths": {
       "@showtime/browser-feature": ["libs/browser/feature/src/index.ts"],
-      "@showtime/browser-feature-2/server": [
-        "libs/browser/feature-2/src/server.ts"
-      ],
+      "@showtime/browser-ui": ["libs/browser/ui/src/index.ts"],
+      "@showtime/browser-ui/*": ["libs/browser/ui/src/lib/*"],
       "@showtime/server-adapter-database": [
         "libs/server/adapter-database/src/index.ts"
       ],

@@ -58,5 +58,14 @@
       }
     }
   },
-  "useInferencePlugins": true
+  "useInferencePlugins": true,
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    }
+  ],
+  "useLegacyCache": true
 }

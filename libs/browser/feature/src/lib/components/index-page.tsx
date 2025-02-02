@@ -1,9 +1,18 @@
 'use client';
+import { Button } from '@showtime/browser-ui';
+import { spacings } from '@showtime/browser-ui/variables/spacings.stylex';
+import * as stylex from '@stylexjs/stylex';
 import { useRouter } from 'next/navigation';
 import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { userSessionService } from '../services/user-session-service';
 import { trpc } from '../trpc';
 import { ApplicationHeader } from './application-header';
+
+const styles = stylex.create({
+  searchButton: {
+    marginLeft: spacings.xlarge,
+  },
+});
 
 export const IndexPage: FC = () => {
   const { push } = useRouter();
@@ -57,7 +66,9 @@ export const IndexPage: FC = () => {
       <ApplicationHeader />
       <h1>Titles</h1>
       <input ref={inputRef} />
-      <button onClick={onSendClick}>Send</button>
+      <Button sx={styles.searchButton} onClick={onSendClick}>
+        Send
+      </Button>
 
       <div>
         {showFavourites && (

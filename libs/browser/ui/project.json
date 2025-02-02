@@ -1,0 +1,9 @@
+{
+  "name": "browser-ui",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/browser/ui/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project browser-ui --web",
+  "targets": {}
+}
